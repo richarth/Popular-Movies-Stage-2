@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Popular Movies</string>
+    <string name="title_movie_detail">Movie Detail</string>
+    <string name="no_movies_found">No movies found</string>
+    <string name="poster_transition" translatable="false">poster_transition</string>
+    <string name="sort_by">Sort by</string>
+    <string name="sort">Sort</string>
+    <string name="select_a_movie">Select a movie from the list to view its details</string>
+    <string name="poster_for_movie">Poster for movie</string>
+    <string name="image_from_movie">Image from movie</string>
+</resources>

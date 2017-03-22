@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/list_side_spacing"
+        android:layout_marginRight="@dimen/list_side_spacing"
+        android:baselineAligned="false"
+        android:divider="?android:attr/dividerHorizontal"
+        android:orientation="vertical"
+        android:showDividers="middle"
+        tools:context="com.appassembla.android.popularmovies.movielist.MovieListActivity">
+
+    <!--
+    This layout is a two-pane portrait layout for the Movies
+    master/detail flow.
+
+    -->
+
+    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/movie_list"
+        android:name="com.appassembla.android.popularmovies.MovieListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/weighted_dimension_empty"
+        android:layout_weight="1"
+        android:layout_marginLeft="@dimen/no_margin"
+        android:layout_marginRight="@dimen/no_margin"
+        app:layoutManager="LinearLayoutManager"
+        tools:context="com.appassembla.android.popularmovies.movielist.MovieListActivity"
+        tools:listitem="@layout/movie_list_content" />
+
+    <FrameLayout
+        android:id="@+id/movie_detail_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/weighted_dimension_empty"
+        android:layout_weight="1"
+        tools:ignore="InconsistentLayout">
+
+        <TextView
+            android:id="@+id/select_movie_message"
+            android:layout_width="@dimen/select_movie_message_width"
+            android:layout_height="wrap_content"
+            android:text="@string/select_a_movie"
+            style="?android:attr/textAppearanceLarge"
+            android:layout_gravity="center"/>
+
+    </FrameLayout>
+
+</LinearLayout>

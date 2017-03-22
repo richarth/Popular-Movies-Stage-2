@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/movie_poster_spacing"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/movie_poster"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/poster_for_movie"
+        tools:src="@drawable/no_movie_poster"
+        android:scaleType="centerCrop"
+        android:transitionName="@string/poster_transition"
+        tools:ignore="UnusedAttribute"
+        android:adjustViewBounds="true"/>
+
+</FrameLayout>
