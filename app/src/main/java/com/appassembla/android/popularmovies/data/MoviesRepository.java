@@ -14,4 +14,8 @@ public interface MoviesRepository {
     Single<MoviesListing> getMovies(int sortType);
 
     Single<Movie> getMovieById(int movieId);
+
+    Single<MovieReviewsListing> getMoviesReviews(int movieId);
+
+    Single<MovieTrailersListing> getMoviesTrailers(int movieId);
 }

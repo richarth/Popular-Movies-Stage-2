@@ -18,4 +18,10 @@ interface MovieDBService {
 
     @GET("3/movie/{id}")
     Single<Movie> getMovieDetails(@Path("id") int movieId);
+
+    @GET("3/movie/{id}/reviews")
+    Single<MovieReviewsListing> getMoviesReviews(@Path("id") int movieId);
+
+    @GET("3/movie/{id}/videos")
+    Single<MovieTrailersListing> getMoviesTrailers(@Path("id") int movieId);
 }
