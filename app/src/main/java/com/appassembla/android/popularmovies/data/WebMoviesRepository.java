@@ -64,4 +64,14 @@ public class WebMoviesRepository implements MoviesRepository {
     public Single<Movie> getMovieById(int movieId) {
         return movieDBService.getMovieDetails(movieId);
     }
+
+    @Override
+    public Single<MovieReviewsListing> getMoviesReviews(int movieId) {
+        return movieDBService.getMoviesReviews(movieId);
+    }
+
+    @Override
+    public Single<MovieTrailersListing> getMoviesTrailers(int movieId) {
+        return movieDBService.getMoviesTrailers(movieId);
+    }
 }

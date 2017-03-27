@@ -12,7 +12,7 @@ import java.util.List;
 
 @SuppressWarnings("DefaultFileTemplate")
 @AutoValue
-abstract class MovieTrailersListing {
+public abstract class MovieTrailersListing {
     public abstract List<MovieTrailer> results();
 
     public static JsonAdapter<MovieTrailersListing> jsonAdapter(Moshi moshi) {

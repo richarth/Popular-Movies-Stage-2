@@ -1,6 +1,8 @@
 package com.appassembla.android.popularmovies.moviedetail;
 
 import com.appassembla.android.popularmovies.data.Movie;
+import com.appassembla.android.popularmovies.data.MovieReviewsListing;
+import com.appassembla.android.popularmovies.data.MovieTrailersListing;
 import com.appassembla.android.popularmovies.data.MoviesListing;
 import com.appassembla.android.popularmovies.data.MoviesRepository;
 import com.appassembla.android.popularmovies.data.StaticMoviesRepository;
@@ -37,10 +39,15 @@ public class MovieDetailsPresenterTest {
 
     private static final int SELECTED_MOVIE_POSITION = 0;
     private static final int MOVIE_SORT_TYPE = 0;
+    private static final int SELECTED_MOVIE_ID = 123;
 
     private static final Single<MoviesListing> SOME_MOVIES = new StaticMoviesRepository().getMovies(MOVIE_SORT_TYPE);
 
     private static final Single<Movie> SELECTED_MOVIE_OBSERVABLE = just(SOME_MOVIES.blockingGet().results().get(SELECTED_MOVIE_POSITION));
+
+    private static final Single<MovieReviewsListing> SOME_REVIEWS = new StaticMoviesRepository().getMoviesReviews(SELECTED_MOVIE_ID);
+
+    private static final Single<MovieTrailersListing> SOME_TRAILERS = new StaticMoviesRepository().getMoviesTrailers(SELECTED_MOVIE_ID);
 
     @BeforeClass
     public static void setupClass() {
@@ -71,5 +78,37 @@ public class MovieDetailsPresenterTest {
         movieDetailsPresenter.displayMovie();
 
         verify(movieDetailsView, never()).displayMovieDetails(null);
+    }
+
+    @Test
+    public void shouldShowReviews() {
+        when(moviesRepository.getMoviesReviews(SELECTED_MOVIE_ID)).thenReturn(SOME_REVIEWS);
+
+        movieDetailsPresenter.displayReviews();
+
+        verify(movieDetailsView).displayReviews(SOME_REVIEWS.blockingGet());
+    }
+
+    @Test
+    public void shouldShowNoReviews() {
+        movieDetailsPresenter.displayReviews();
+
+        verify(movieDetailsView, never()).displayReviews(null);
+    }
+
+    @Test
+    public void shouldShowTrailers() {
+        when(moviesRepository.getMoviesTrailers(SELECTED_MOVIE_ID)).thenReturn(SOME_TRAILERS);
+
+        movieDetailsPresenter.displayTrailers();
+
+        verify(movieDetailsView).displayTrailers(SOME_TRAILERS.blockingGet());
+    }
+
+    @Test
+    public void shouldShowNoTrailers() {
+        movieDetailsPresenter.displayTrailers();
+
+        verify(movieDetailsView, never()).displayTrailers(null);
     }
 }

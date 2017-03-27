@@ -4,6 +4,9 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.appassembla.android.popularmovies.data.Movie;
+import com.appassembla.android.popularmovies.data.MovieReviewsListing;
+import com.appassembla.android.popularmovies.data.MovieTrailer;
+import com.appassembla.android.popularmovies.data.MovieTrailersListing;
 import com.appassembla.android.popularmovies.data.MoviesRepository;
 
 import io.reactivex.Single;
@@ -24,6 +27,7 @@ class MovieDetailsPresenter {
     private final static String TAG = "MovieDetailsPresenter";
 
     private Disposable movieSubscription;
+    private Disposable trailersSubscription;
 
     public MovieDetailsPresenter(@NonNull MovieDetailsView movieDetailsView, @NonNull MoviesRepository moviesRepository, int selectedMovieId) {
         this.movieDetailsView = movieDetailsView;
@@ -55,5 +59,45 @@ class MovieDetailsPresenter {
         if (movieSubscription != null) {
             movieSubscription.dispose();
         }
+
+        if (trailersSubscription != null) {
+            trailersSubscription.dispose();
+        }
+    }
+
+    public void displayReviews() {
+        Single<MovieReviewsListing> selectedMoviesReviews = moviesRepository.getMoviesReviews(selectedMovieId);
+
+        if (selectedMoviesReviews != null) {
+            trailersSubscription = selectedMoviesReviews.observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(this::reviewFetched, this::reviewFetchFailure);
+        }
+    }
+
+    private void reviewFetched(MovieReviewsListing movieReviewsListing) {
+        movieDetailsView.displayReviews(movieReviewsListing);
+    }
+
+    private void reviewFetchFailure(Throwable throwable) {
+        Log.d(TAG, throwable.getMessage());
+    }
+
+    public void displayTrailers() {
+        Single<MovieTrailersListing> selectedMoviesTrailers = moviesRepository.getMoviesTrailers(selectedMovieId);
+
+        if (selectedMoviesTrailers != null) {
+            trailersSubscription = selectedMoviesTrailers.observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(this::trailerFetched, this::trailerFetchFailure);
+        }
+    }
+
+    private void trailerFetched(MovieTrailersListing movieTrailersListing) {
+        movieDetailsView.displayTrailers(movieTrailersListing);
+    }
+
+    private void trailerFetchFailure(Throwable throwable) {
+        Log.d(TAG, throwable.getMessage());
     }
 }

@@ -1,6 +1,8 @@
 package com.appassembla.android.popularmovies.moviedetail;
 
 import com.appassembla.android.popularmovies.data.Movie;
+import com.appassembla.android.popularmovies.data.MovieReviewsListing;
+import com.appassembla.android.popularmovies.data.MovieTrailersListing;
 
 /**
  * Created by Richard Thompson on 04/02/2017.
@@ -9,4 +11,6 @@ import com.appassembla.android.popularmovies.data.Movie;
 interface MovieDetailsView {
     void displayMovieDetails(Movie selectedMovie);
     void hideSelectMovieMessage();
+    void displayTrailers(MovieTrailersListing movieTrailersListing);
+    void displayReviews(MovieReviewsListing movieReviewsListing);
 }

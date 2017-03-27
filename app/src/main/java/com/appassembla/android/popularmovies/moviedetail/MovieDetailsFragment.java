@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.appassembla.android.popularmovies.R;
 import com.appassembla.android.popularmovies.data.Movie;
+import com.appassembla.android.popularmovies.data.MovieReviewsListing;
+import com.appassembla.android.popularmovies.data.MovieTrailersListing;
 import com.appassembla.android.popularmovies.data.WebMoviesRepository;
 import com.appassembla.android.popularmovies.movielist.MovieListActivity;
 import com.squareup.picasso.Picasso;
@@ -156,6 +158,16 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsView {
         if (selectMovieMessage != null) {
             selectMovieMessage.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void displayTrailers(MovieTrailersListing movieTrailersListing) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void displayReviews(MovieReviewsListing movieReviewsListing) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
