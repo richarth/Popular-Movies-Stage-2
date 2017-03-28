@@ -35,25 +35,22 @@ public class MovieDetailsPresenterTest {
     @Mock
     private MoviesRepository moviesRepository;
     private MovieDetailsPresenter movieDetailsPresenter;
-    private int movieId;
 
     private static final int SELECTED_MOVIE_POSITION = 0;
     private static final int MOVIE_SORT_TYPE = 0;
-    private static final int SELECTED_MOVIE_ID = 123;
+    private static final int SELECTED_MOVIE_ID = 7;
 
-    private static final StaticMoviesRepository movieRepository = new StaticMoviesRepository();
-
-    private static final Single<MoviesListing> SOME_MOVIES = movieRepository.getMovies(MOVIE_SORT_TYPE);
+    private static final Single<MoviesListing> SOME_MOVIES = new StaticMoviesRepository().getMovies(MOVIE_SORT_TYPE);
 
     private static final Single<Movie> SELECTED_MOVIE_OBSERVABLE = just(SOME_MOVIES.blockingGet().results().get(SELECTED_MOVIE_POSITION));
 
-    private static final Single<MovieReviewsListing> SOME_REVIEWS = movieRepository.getMoviesReviews(SELECTED_MOVIE_ID);
+    private static final Single<MovieReviewsListing> SOME_REVIEWS = new StaticMoviesRepository().getMoviesReviews(SELECTED_MOVIE_ID);
 
-    private static final Single<MovieReviewsListing> NO_REVIEWS_OBSERVABLE = movieRepository.getNoReviews();
+    private static final Single<MovieReviewsListing> NO_REVIEWS_OBSERVABLE = new StaticMoviesRepository().getNoReviews();
 
-    private static final Single<MovieTrailersListing> SOME_TRAILERS = movieRepository.getMoviesTrailers(SELECTED_MOVIE_ID);
+    private static final Single<MovieTrailersListing> SOME_TRAILERS = new StaticMoviesRepository().getMoviesTrailers(SELECTED_MOVIE_ID);
 
-    private static final Single<MovieTrailersListing> NO_TRAILERS_OBSERVABLE = movieRepository.getNoTrailers();
+    private static final Single<MovieTrailersListing> NO_TRAILERS_OBSERVABLE = new StaticMoviesRepository().getNoTrailers();
 
     @BeforeClass
     public static void setupClass() {
@@ -65,14 +62,12 @@ public class MovieDetailsPresenterTest {
 
     @Before
     public void setUp() {
-        movieId = 7;
-
-        movieDetailsPresenter = new MovieDetailsPresenter(movieDetailsView, moviesRepository, movieId);
+        movieDetailsPresenter = new MovieDetailsPresenter(movieDetailsView, moviesRepository, SELECTED_MOVIE_ID);
     }
 
     @Test
     public void shouldShowMovieDetail() {
-        when(moviesRepository.getMovieById(movieId)).thenReturn(SELECTED_MOVIE_OBSERVABLE);
+        when(moviesRepository.getMovieById(SELECTED_MOVIE_ID)).thenReturn(SELECTED_MOVIE_OBSERVABLE);
 
         movieDetailsPresenter.displayMovie();
 

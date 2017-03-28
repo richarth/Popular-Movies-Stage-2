@@ -4,11 +4,13 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.appassembla.android.popularmovies.data.Movie;
+import com.appassembla.android.popularmovies.data.MovieReview;
 import com.appassembla.android.popularmovies.data.MovieReviewsListing;
 import com.appassembla.android.popularmovies.data.MovieTrailer;
 import com.appassembla.android.popularmovies.data.MovieTrailersListing;
-import com.appassembla.android.popularmovies.data.MoviesListing;
 import com.appassembla.android.popularmovies.data.MoviesRepository;
+
+import java.util.List;
 
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -72,12 +74,18 @@ class MovieDetailsPresenter {
         if (selectedMoviesReviews != null) {
             trailersSubscription = selectedMoviesReviews.observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
-                    .subscribe(this::reviewFetched, this::reviewFetchFailure);
+                    .subscribe(this::reviewsFetched, this::reviewFetchFailure);
         }
     }
 
-    private void reviewFetched(MovieReviewsListing movieReviewsListing) {
-        movieDetailsView.displayReviews(movieReviewsListing.results());
+    private void reviewsFetched(MovieReviewsListing movieReviewsListing) {
+        List<MovieReview> moviesReviews = movieReviewsListing.results();
+
+        if (!moviesReviews.isEmpty()) {
+            movieDetailsView.displayReviews(moviesReviews);
+        } else {
+            movieDetailsView.hideReviews();
+        }
     }
 
     private void reviewFetchFailure(Throwable throwable) {
@@ -92,12 +100,18 @@ class MovieDetailsPresenter {
         if (selectedMoviesTrailers != null) {
             trailersSubscription = selectedMoviesTrailers.observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
-                    .subscribe(this::trailerFetched, this::trailerFetchFailure);
+                    .subscribe(this::trailersFetched, this::trailerFetchFailure);
         }
     }
 
-    private void trailerFetched(MovieTrailersListing movieTrailersListing) {
-        movieDetailsView.displayTrailers(movieTrailersListing.results());
+    private void trailersFetched(MovieTrailersListing movieTrailersListing) {
+        List<MovieTrailer> moviesTrailers = movieTrailersListing.results();
+
+        if (!moviesTrailers.isEmpty()) {
+            movieDetailsView.displayTrailers(moviesTrailers);
+        } else {
+            movieDetailsView.hideTrailers();
+        }
     }
 
     private void trailerFetchFailure(Throwable throwable) {
