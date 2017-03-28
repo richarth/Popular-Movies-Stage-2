@@ -105,6 +105,7 @@ public class StaticMoviesRepository implements MoviesRepository {
 
     @SuppressLint("NewApi")
     @Override
+    @NonNull
     public Single<Movie> getMovieById(final int movieId) {
 
         Movie selectedMovie = null;
@@ -123,12 +124,24 @@ public class StaticMoviesRepository implements MoviesRepository {
     }
 
     @Override
+    @NonNull
     public Single<MovieReviewsListing> getMoviesReviews(int movieId) {
         return Single.just(moviesReviewsListing);
     }
 
+    @NonNull
+    public Single<MovieReviewsListing> getNoReviews() {
+        return Single.just(emptyReviewsListing);
+    }
+
     @Override
+    @NonNull
     public Single<MovieTrailersListing> getMoviesTrailers(int movieId) {
         return Single.just(moviesTrailersListing);
+    }
+
+    @NonNull
+    public Single<MovieTrailersListing> getNoTrailers() {
+        return Single.just(emptyTrailersListing);
     }
 }

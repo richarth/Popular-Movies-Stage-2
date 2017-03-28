@@ -7,6 +7,7 @@ import com.appassembla.android.popularmovies.data.Movie;
 import com.appassembla.android.popularmovies.data.MovieReviewsListing;
 import com.appassembla.android.popularmovies.data.MovieTrailer;
 import com.appassembla.android.popularmovies.data.MovieTrailersListing;
+import com.appassembla.android.popularmovies.data.MoviesListing;
 import com.appassembla.android.popularmovies.data.MoviesRepository;
 
 import io.reactivex.Single;
@@ -76,11 +77,13 @@ class MovieDetailsPresenter {
     }
 
     private void reviewFetched(MovieReviewsListing movieReviewsListing) {
-        movieDetailsView.displayReviews(movieReviewsListing);
+        movieDetailsView.displayReviews(movieReviewsListing.results());
     }
 
     private void reviewFetchFailure(Throwable throwable) {
         Log.d(TAG, throwable.getMessage());
+
+        movieDetailsView.hideReviews();
     }
 
     public void displayTrailers() {
@@ -94,10 +97,12 @@ class MovieDetailsPresenter {
     }
 
     private void trailerFetched(MovieTrailersListing movieTrailersListing) {
-        movieDetailsView.displayTrailers(movieTrailersListing);
+        movieDetailsView.displayTrailers(movieTrailersListing.results());
     }
 
     private void trailerFetchFailure(Throwable throwable) {
         Log.d(TAG, throwable.getMessage());
+
+        movieDetailsView.hideTrailers();
     }
 }

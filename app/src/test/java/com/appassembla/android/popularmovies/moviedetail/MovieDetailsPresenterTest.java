@@ -41,13 +41,19 @@ public class MovieDetailsPresenterTest {
     private static final int MOVIE_SORT_TYPE = 0;
     private static final int SELECTED_MOVIE_ID = 123;
 
-    private static final Single<MoviesListing> SOME_MOVIES = new StaticMoviesRepository().getMovies(MOVIE_SORT_TYPE);
+    private static final StaticMoviesRepository movieRepository = new StaticMoviesRepository();
+
+    private static final Single<MoviesListing> SOME_MOVIES = movieRepository.getMovies(MOVIE_SORT_TYPE);
 
     private static final Single<Movie> SELECTED_MOVIE_OBSERVABLE = just(SOME_MOVIES.blockingGet().results().get(SELECTED_MOVIE_POSITION));
 
-    private static final Single<MovieReviewsListing> SOME_REVIEWS = new StaticMoviesRepository().getMoviesReviews(SELECTED_MOVIE_ID);
+    private static final Single<MovieReviewsListing> SOME_REVIEWS = movieRepository.getMoviesReviews(SELECTED_MOVIE_ID);
 
-    private static final Single<MovieTrailersListing> SOME_TRAILERS = new StaticMoviesRepository().getMoviesTrailers(SELECTED_MOVIE_ID);
+    private static final Single<MovieReviewsListing> NO_REVIEWS_OBSERVABLE = movieRepository.getNoReviews();
+
+    private static final Single<MovieTrailersListing> SOME_TRAILERS = movieRepository.getMoviesTrailers(SELECTED_MOVIE_ID);
+
+    private static final Single<MovieTrailersListing> NO_TRAILERS_OBSERVABLE = movieRepository.getNoTrailers();
 
     @BeforeClass
     public static void setupClass() {
@@ -86,14 +92,16 @@ public class MovieDetailsPresenterTest {
 
         movieDetailsPresenter.displayReviews();
 
-        verify(movieDetailsView).displayReviews(SOME_REVIEWS.blockingGet());
+        verify(movieDetailsView).displayReviews(SOME_REVIEWS.blockingGet().results());
     }
 
     @Test
     public void shouldShowNoReviews() {
+        when(moviesRepository.getMoviesReviews(SELECTED_MOVIE_ID)).thenReturn(NO_REVIEWS_OBSERVABLE);
+
         movieDetailsPresenter.displayReviews();
 
-        verify(movieDetailsView, never()).displayReviews(null);
+        verify(movieDetailsView).hideReviews();
     }
 
     @Test
@@ -102,13 +110,15 @@ public class MovieDetailsPresenterTest {
 
         movieDetailsPresenter.displayTrailers();
 
-        verify(movieDetailsView).displayTrailers(SOME_TRAILERS.blockingGet());
+        verify(movieDetailsView).displayTrailers(SOME_TRAILERS.blockingGet().results());
     }
 
     @Test
     public void shouldShowNoTrailers() {
+        when(moviesRepository.getMoviesTrailers(SELECTED_MOVIE_ID)).thenReturn(NO_TRAILERS_OBSERVABLE);
+
         movieDetailsPresenter.displayTrailers();
 
-        verify(movieDetailsView, never()).displayTrailers(null);
+        verify(movieDetailsView).hideTrailers();
     }
 }

@@ -14,11 +14,15 @@ import android.widget.TextView;
 
 import com.appassembla.android.popularmovies.R;
 import com.appassembla.android.popularmovies.data.Movie;
+import com.appassembla.android.popularmovies.data.MovieReview;
 import com.appassembla.android.popularmovies.data.MovieReviewsListing;
+import com.appassembla.android.popularmovies.data.MovieTrailer;
 import com.appassembla.android.popularmovies.data.MovieTrailersListing;
 import com.appassembla.android.popularmovies.data.WebMoviesRepository;
 import com.appassembla.android.popularmovies.movielist.MovieListActivity;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -161,12 +165,22 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsView {
     }
 
     @Override
-    public void displayTrailers(MovieTrailersListing movieTrailersListing) {
+    public void displayTrailers(List<MovieTrailer> moviesTrailers) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void displayReviews(MovieReviewsListing movieReviewsListing) {
+    public void displayReviews(List<MovieReview> moviesReviews) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void hideTrailers() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void hideReviews() {
         throw new UnsupportedOperationException();
     }
 
