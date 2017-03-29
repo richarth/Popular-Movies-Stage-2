@@ -302,8 +302,6 @@ public class MovieListActivity extends AppCompatActivity implements MovieListVie
         public void onBindViewHolder(final ViewHolder holder, final int position) {
             int listWidth = recyclerView.getWidth();
 
-            int columnWidth = listWidth / NUM_COLUMNS_IN_LIST;
-
             Picasso.with(getApplication())
                     .load(mValues.get(position).getPosterImgFullUrl(listWidth))
                     .placeholder(R.drawable.no_movie_poster)
