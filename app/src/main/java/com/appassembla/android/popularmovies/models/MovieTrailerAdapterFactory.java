@@ -2,7 +2,6 @@ package com.appassembla.android.popularmovies.models;
 
 import com.ryanharter.auto.value.moshi.MoshiAdapterFactory;
 import com.squareup.moshi.JsonAdapter;
-import com.squareup.moshi.JsonAdapter.Factory;
 
 /**
  * Created by richard.thompson on 22/03/2017.

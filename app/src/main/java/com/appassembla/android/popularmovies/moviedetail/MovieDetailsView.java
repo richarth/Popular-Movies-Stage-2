@@ -2,9 +2,7 @@ package com.appassembla.android.popularmovies.moviedetail;
 
 import com.appassembla.android.popularmovies.models.Movie;
 import com.appassembla.android.popularmovies.models.MovieReview;
-import com.appassembla.android.popularmovies.models.MovieReviewsListing;
 import com.appassembla.android.popularmovies.models.MovieTrailer;
-import com.appassembla.android.popularmovies.models.MovieTrailersListing;
 
 import java.util.List;
 
