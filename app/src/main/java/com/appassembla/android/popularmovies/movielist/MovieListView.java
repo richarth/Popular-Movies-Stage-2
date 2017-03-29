@@ -1,6 +1,6 @@
 package com.appassembla.android.popularmovies.movielist;
 
-import com.appassembla.android.popularmovies.data.Movie;
+import com.appassembla.android.popularmovies.models.Movie;
 
 import java.util.List;
 

@@ -1,5 +1,7 @@
 package com.appassembla.android.popularmovies.data;
 
+import com.appassembla.android.popularmovies.models.Movie;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

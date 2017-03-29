@@ -27,8 +27,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 
-import com.appassembla.android.popularmovies.data.Movie;
 import com.appassembla.android.popularmovies.data.WebMoviesRepository;
+import com.appassembla.android.popularmovies.models.Movie;
 import com.appassembla.android.popularmovies.moviedetail.MovieDetailsActivity;
 import com.appassembla.android.popularmovies.moviedetail.MovieDetailsFragment;
 import com.appassembla.android.popularmovies.R;

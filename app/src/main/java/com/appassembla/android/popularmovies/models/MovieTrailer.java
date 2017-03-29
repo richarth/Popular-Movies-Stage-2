@@ -1,4 +1,4 @@
-package com.appassembla.android.popularmovies.data;
+package com.appassembla.android.popularmovies.models;
 
 import android.support.annotation.NonNull;
 

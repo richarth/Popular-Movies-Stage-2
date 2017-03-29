@@ -1,5 +1,7 @@
 package com.appassembla.android.popularmovies.data;
 
+import com.appassembla.android.popularmovies.models.Movie;
+import com.appassembla.android.popularmovies.models.MovieAdapterFactory;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 

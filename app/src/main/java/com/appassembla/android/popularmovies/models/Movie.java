@@ -1,7 +1,8 @@
-package com.appassembla.android.popularmovies.data;
+package com.appassembla.android.popularmovies.models;
 
 import android.support.annotation.NonNull;
 
+import com.appassembla.android.popularmovies.data.MoviesRepository;
 import com.google.auto.value.AutoValue;
 import com.squareup.moshi.Json;
 import com.squareup.moshi.JsonAdapter;

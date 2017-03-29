@@ -13,12 +13,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.appassembla.android.popularmovies.R;
-import com.appassembla.android.popularmovies.data.Movie;
-import com.appassembla.android.popularmovies.data.MovieReview;
-import com.appassembla.android.popularmovies.data.MovieReviewsListing;
-import com.appassembla.android.popularmovies.data.MovieTrailer;
-import com.appassembla.android.popularmovies.data.MovieTrailersListing;
 import com.appassembla.android.popularmovies.data.WebMoviesRepository;
+import com.appassembla.android.popularmovies.models.Movie;
+import com.appassembla.android.popularmovies.models.MovieReview;
+import com.appassembla.android.popularmovies.models.MovieTrailer;
 import com.appassembla.android.popularmovies.movielist.MovieListActivity;
 import com.squareup.picasso.Picasso;
 

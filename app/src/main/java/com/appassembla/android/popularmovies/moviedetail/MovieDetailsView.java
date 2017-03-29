@@ -1,10 +1,10 @@
 package com.appassembla.android.popularmovies.moviedetail;
 
-import com.appassembla.android.popularmovies.data.Movie;
-import com.appassembla.android.popularmovies.data.MovieReview;
-import com.appassembla.android.popularmovies.data.MovieReviewsListing;
-import com.appassembla.android.popularmovies.data.MovieTrailer;
-import com.appassembla.android.popularmovies.data.MovieTrailersListing;
+import com.appassembla.android.popularmovies.models.Movie;
+import com.appassembla.android.popularmovies.models.MovieReview;
+import com.appassembla.android.popularmovies.models.MovieReviewsListing;
+import com.appassembla.android.popularmovies.models.MovieTrailer;
+import com.appassembla.android.popularmovies.models.MovieTrailersListing;
 
 import java.util.List;
 

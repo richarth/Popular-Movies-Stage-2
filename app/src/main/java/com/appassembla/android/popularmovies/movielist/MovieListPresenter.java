@@ -3,9 +3,9 @@ package com.appassembla.android.popularmovies.movielist;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.appassembla.android.popularmovies.data.Movie;
-import com.appassembla.android.popularmovies.data.MoviesListing;
 import com.appassembla.android.popularmovies.data.MoviesRepository;
+import com.appassembla.android.popularmovies.models.Movie;
+import com.appassembla.android.popularmovies.models.MoviesListing;
 
 import java.util.List;
 

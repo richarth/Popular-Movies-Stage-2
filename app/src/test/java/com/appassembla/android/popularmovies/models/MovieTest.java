@@ -1,5 +1,8 @@
-package com.appassembla.android.popularmovies.data;
+package com.appassembla.android.popularmovies.models;
 
+import com.appassembla.android.popularmovies.data.MoviesRepository;
+
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -19,7 +22,7 @@ public class MovieTest {
 
         int sortOrderSelected = Movie.determineDesiredSortOrder(selectedSpinnerPosition);
 
-        assertEquals(MoviesRepository.TOP_RATED_SORT_TYPE, sortOrderSelected);
+        Assert.assertEquals(MoviesRepository.TOP_RATED_SORT_TYPE, sortOrderSelected);
     }
 
     @Test

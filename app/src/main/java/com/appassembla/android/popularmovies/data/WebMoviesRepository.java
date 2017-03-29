@@ -1,6 +1,11 @@
 package com.appassembla.android.popularmovies.data;
 
 import com.appassembla.android.popularmovies.BuildConfig;
+import com.appassembla.android.popularmovies.models.Movie;
+import com.appassembla.android.popularmovies.models.MovieAdapterFactory;
+import com.appassembla.android.popularmovies.models.MovieReviewsListing;
+import com.appassembla.android.popularmovies.models.MovieTrailersListing;
+import com.appassembla.android.popularmovies.models.MoviesListing;
 import com.squareup.moshi.Moshi;
 
 import io.reactivex.Single;

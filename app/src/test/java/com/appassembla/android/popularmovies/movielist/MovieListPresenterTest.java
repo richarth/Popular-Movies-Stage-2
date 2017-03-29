@@ -1,8 +1,8 @@
 package com.appassembla.android.popularmovies.movielist;
 
-import com.appassembla.android.popularmovies.data.MoviesListing;
 import com.appassembla.android.popularmovies.data.MoviesRepository;
 import com.appassembla.android.popularmovies.data.StaticMoviesRepository;
+import com.appassembla.android.popularmovies.models.MoviesListing;
 
 import org.junit.Before;
 import org.junit.BeforeClass;

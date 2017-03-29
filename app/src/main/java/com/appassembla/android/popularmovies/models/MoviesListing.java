@@ -1,4 +1,4 @@
-package com.appassembla.android.popularmovies.data;
+package com.appassembla.android.popularmovies.models;
 
 import com.google.auto.value.AutoValue;
 import com.squareup.moshi.JsonAdapter;

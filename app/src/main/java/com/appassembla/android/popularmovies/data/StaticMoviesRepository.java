@@ -3,6 +3,13 @@ package com.appassembla.android.popularmovies.data;
 import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 
+import com.appassembla.android.popularmovies.models.Movie;
+import com.appassembla.android.popularmovies.models.MovieReview;
+import com.appassembla.android.popularmovies.models.MovieReviewsListing;
+import com.appassembla.android.popularmovies.models.MovieTrailer;
+import com.appassembla.android.popularmovies.models.MovieTrailersListing;
+import com.appassembla.android.popularmovies.models.MoviesListing;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;

@@ -1,5 +1,10 @@
 package com.appassembla.android.popularmovies.data;
 
+import com.appassembla.android.popularmovies.models.Movie;
+import com.appassembla.android.popularmovies.models.MovieReviewsListing;
+import com.appassembla.android.popularmovies.models.MovieTrailersListing;
+import com.appassembla.android.popularmovies.models.MoviesListing;
+
 import io.reactivex.Single;
 
 /**
