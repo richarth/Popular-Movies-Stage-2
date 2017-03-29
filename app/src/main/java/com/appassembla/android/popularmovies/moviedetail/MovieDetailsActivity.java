@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
  */
 public class MovieDetailsActivity extends AppCompatActivity {
 
-    @SuppressWarnings("WeakerAccess")
+    @SuppressWarnings({"WeakerAccess", "CanBeFinal"})
     @BindView(R.id.detail_toolbar)
     protected Toolbar toolbar;
 

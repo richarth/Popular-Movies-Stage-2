@@ -57,28 +57,28 @@ public class MovieListActivity extends AppCompatActivity implements MovieListVie
      */
     private boolean isTwoPane;
 
-    @SuppressWarnings("WeakerAccess")
+    @SuppressWarnings({"WeakerAccess", "CanBeFinal"})
     @BindView(R.id.movie_list)
     protected RecyclerView recyclerView;
 
     @SuppressWarnings("WeakerAccess")
     protected MovieListPresenter movieListPresenter;
 
-    @SuppressWarnings("WeakerAccess")
+    @SuppressWarnings({"WeakerAccess", "CanBeFinal"})
     @BindView(R.id.no_movies_message)
-    protected TextView noMoviesTextView;
+    TextView noMoviesTextView;
 
-    @SuppressWarnings("WeakerAccess")
+    @SuppressWarnings({"WeakerAccess", "CanBeFinal"})
     @BindView(R.id.toolbar)
     protected Toolbar toolbar;
 
-    @SuppressWarnings("WeakerAccess")
+    @SuppressWarnings({"WeakerAccess", "CanBeFinal"})
     @BindView(R.id.progressBar)
     protected ProgressBar progressBar;
 
     private Spinner sortSpinner;
 
-    @SuppressWarnings("WeakerAccess")
+    @SuppressWarnings({"WeakerAccess", "CanBeFinal"})
     @Nullable
     @BindView(R.id.movie_detail_container)
     protected FrameLayout movieDetailContainer;
