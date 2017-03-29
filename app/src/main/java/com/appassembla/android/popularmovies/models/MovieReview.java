@@ -10,6 +10,7 @@ import com.squareup.moshi.Moshi;
  * Created by richard.thompson on 23/03/2017.
  */
 
+@SuppressWarnings("DefaultFileTemplate")
 @AutoValue
 public abstract class MovieReview {
     public abstract String author();

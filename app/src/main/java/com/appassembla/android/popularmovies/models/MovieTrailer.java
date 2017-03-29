@@ -10,6 +10,7 @@ import com.squareup.moshi.Moshi;
  * Created by richard.thompson on 22/03/2017.
  */
 
+@SuppressWarnings("DefaultFileTemplate")
 @AutoValue
 public abstract class MovieTrailer {
     public abstract String key();
