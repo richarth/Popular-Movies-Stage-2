@@ -26,8 +26,10 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class MovieListPresenterTest {
 
+    @SuppressWarnings("CanBeFinal")
     @Mock
     private MovieListView movieListView;
+    @SuppressWarnings("CanBeFinal")
     @Mock
     private MoviesRepository moviesRepository;
     private MovieListPresenter movieListPresenter;

@@ -30,8 +30,10 @@ import static org.mockito.Mockito.when;
 @SuppressWarnings({"unused", "DefaultFileTemplate"})
 @RunWith(MockitoJUnitRunner.class)
 public class MovieDetailsPresenterTest {
+    @SuppressWarnings("CanBeFinal")
     @Mock
     private MovieDetailsView movieDetailsView;
+    @SuppressWarnings("CanBeFinal")
     @Mock
     private MoviesRepository moviesRepository;
     private MovieDetailsPresenter movieDetailsPresenter;

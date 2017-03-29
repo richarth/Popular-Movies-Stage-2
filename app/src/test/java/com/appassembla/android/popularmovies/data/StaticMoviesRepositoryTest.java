@@ -26,9 +26,11 @@ public class StaticMoviesRepositoryTest {
 
     private MoviesRepository moviesRepository;
 
+    @SuppressWarnings("CanBeFinal")
     @Mock
     private MoviesRepository emptyMoviesRepository;
 
+    @SuppressWarnings("CanBeFinal")
     @Mock
     private HttpException error404;
 
