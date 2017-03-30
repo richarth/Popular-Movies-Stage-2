@@ -10,4 +10,5 @@
     <dimen name="weighted_dimension_empty">0dp</dimen>
     <dimen name="select_movie_message_width">250dp</dimen>
     <dimen name="no_margin">0dp</dimen>
+    <dimen name="list_item_padding">8dp</dimen>
 </resources>

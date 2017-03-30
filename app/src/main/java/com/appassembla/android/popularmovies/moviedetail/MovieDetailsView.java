@@ -15,6 +15,4 @@ interface MovieDetailsView {
     void hideSelectMovieMessage();
     void displayTrailers(List<MovieTrailer> moviesTrailersList);
     void displayReviews(List<MovieReview> moviesReviewsList);
-    void hideTrailers();
-    void hideReviews();
 }

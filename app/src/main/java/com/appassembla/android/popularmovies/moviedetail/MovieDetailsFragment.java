@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +27,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 /**
  * A fragment representing a single Movie detail screen.
@@ -53,6 +58,18 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsView {
     @SuppressWarnings("WeakerAccess")
     @BindView(R.id.plot_synopsis_text_view)
     protected TextView synopsisTextView;
+    @SuppressWarnings("WeakerAccess")
+    @BindView(R.id.trailersHeading)
+    protected TextView trailersHeadingTextView;
+    @SuppressWarnings("WeakerAccess")
+    @BindView(R.id.trailersList)
+    protected RecyclerView trailersRecyclerView;
+    @SuppressWarnings("WeakerAccess")
+    @BindView(R.id.reviewsHeading)
+    protected TextView reviewsHeadingTextView;
+    @SuppressWarnings("WeakerAccess")
+    @BindView(R.id.reviewsList)
+    protected RecyclerView reviewsRecyclerView;
     private ImageView heroImage;
     private CollapsingToolbarLayout appBarLayout;
 
@@ -97,6 +114,10 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsView {
 
         if (movieDetailsPresenter != null) {
             movieDetailsPresenter.displayMovie();
+
+            movieDetailsPresenter.displayTrailers();
+
+            movieDetailsPresenter.displayReviews();
         }
     }
 
@@ -158,28 +179,24 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsView {
         TextView selectMovieMessage = (TextView) getActivity().findViewById(R.id.select_movie_message);
 
         if (selectMovieMessage != null) {
-            selectMovieMessage.setVisibility(View.GONE);
+            selectMovieMessage.setVisibility(GONE);
         }
     }
 
     @Override
     public void displayTrailers(List<MovieTrailer> moviesTrailers) {
-        throw new UnsupportedOperationException();
+        trailersHeadingTextView.setVisibility(VISIBLE);
+        trailersRecyclerView.setVisibility(VISIBLE);
+
+        setupTrailersRecyclerView(trailersRecyclerView, moviesTrailers);
     }
 
     @Override
     public void displayReviews(List<MovieReview> moviesReviews) {
-        throw new UnsupportedOperationException();
-    }
+        reviewsHeadingTextView.setVisibility(VISIBLE);
+        reviewsRecyclerView.setVisibility(VISIBLE);
 
-    @Override
-    public void hideTrailers() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void hideReviews() {
-        throw new UnsupportedOperationException();
+        setupReviewsRecyclerView(reviewsRecyclerView, moviesReviews);
     }
 
     @Override
@@ -189,5 +206,117 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsView {
         movieDetailsPresenter.cancelSubscriptions();
 
         movieDetailsPresenter = null;
+    }
+
+    private void setupTrailersRecyclerView(@NonNull RecyclerView recyclerView, @NonNull List<MovieTrailer> trailers) {
+        recyclerView.setAdapter(new TrailerItemRecyclerViewAdapter(trailers));
+
+        LinearLayoutManager listLayoutManager = new LinearLayoutManager(getContext());
+
+        recyclerView.setLayoutManager(listLayoutManager);
+
+        recyclerView.setHasFixedSize(true);
+    }
+
+    private void setupReviewsRecyclerView(@NonNull RecyclerView recyclerView, @NonNull List<MovieReview> reviews) {
+        recyclerView.setAdapter(new ReviewItemRecyclerViewAdapter(reviews));
+
+        LinearLayoutManager listLayoutManager = new LinearLayoutManager(getContext());
+
+        recyclerView.setLayoutManager(listLayoutManager);
+
+        recyclerView.setHasFixedSize(true);
+    }
+
+    public class TrailerItemRecyclerViewAdapter
+            extends RecyclerView.Adapter<TrailerItemRecyclerViewAdapter.ViewHolder> {
+
+        private final List<MovieTrailer> mTrailers;
+
+        public TrailerItemRecyclerViewAdapter(List<MovieTrailer> trailers) {
+            mTrailers = trailers;
+        }
+
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.trailers_list_content, parent, false);
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(final ViewHolder holder, final int position) {
+
+            holder.trailerName.setText(mTrailers.get(position).name());
+
+            int clickedPosition = holder.getAdapterPosition();
+
+            holder.mView.setOnClickListener(v -> movieDetailsPresenter.trailerClicked(mTrailers.get(clickedPosition).id(), clickedPosition));
+        }
+
+        @Override
+        public int getItemCount() {
+            return mTrailers.size();
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            public final View mView;
+            @BindView(R.id.trailerPlayButton)
+            ImageView trailerPlayButton;
+            @BindView(R.id.trailerName)
+            TextView trailerName;
+
+            public ViewHolder(View view) {
+                super(view);
+
+                ButterKnife.bind(this, view);
+
+                mView = view;
+            }
+        }
+    }
+
+    public class ReviewItemRecyclerViewAdapter
+            extends RecyclerView.Adapter<ReviewItemRecyclerViewAdapter.ViewHolder> {
+
+        private final List<MovieReview> mReviews;
+
+        public ReviewItemRecyclerViewAdapter(List<MovieReview> reviews) {
+            mReviews = reviews;
+        }
+
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.reviews_list_content, parent, false);
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(final ViewHolder holder, final int position) {
+            holder.reviewsContent.setText(mReviews.get(position).content());
+            holder.reviewsAuthor.setText(mReviews.get(position).author());
+        }
+
+        @Override
+        public int getItemCount() {
+            return mReviews.size();
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            public final View mView;
+            @BindView(R.id.reviewContent)
+            TextView reviewsContent;
+            @BindView(R.id.reviewAuthor)
+            TextView reviewsAuthor;
+
+            public ViewHolder(View view) {
+                super(view);
+
+                ButterKnife.bind(this, view);
+
+                mView = view;
+            }
+        }
     }
 }

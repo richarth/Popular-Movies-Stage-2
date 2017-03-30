@@ -78,10 +78,9 @@ public class StaticMoviesRepository implements MoviesRepository {
             }
         };
 
-        MovieTrailer sampleMovieTrailer1 = MovieTrailer.create("XaE_9pfybL4", "Official Trailer #2 [UK]", "YouTube");
-        MovieTrailer sampleMovieTrailer2 = MovieTrailer.create("G0HRx_0fimc", "Official Trailer #1 [UK]", "YouTube");
-        MovieTrailer sampleMovieTrailer3 = MovieTrailer.create("RH3OxVFvTeg", "Official Trailer #2", "YouTube");
-
+        MovieTrailer sampleMovieTrailer1 = MovieTrailer.create("58cfc8499251415a61037481", "XaE_9pfybL4", "Official Trailer #2 [UK]", "YouTube");
+        MovieTrailer sampleMovieTrailer2 = MovieTrailer.create("58cfc8c09251415a39034879", "G0HRx_0fimc", "Official Trailer #1 [UK]", "YouTube");
+        MovieTrailer sampleMovieTrailer3 = MovieTrailer.create("58cfc820c3a36850fb033208", "RH3OxVFvTeg", "Official Trailer #2", "YouTube");
         moviesTrailers = Arrays.asList(sampleMovieTrailer1, sampleMovieTrailer2, sampleMovieTrailer3);
 
         moviesTrailersListing = new MovieTrailersListing() {

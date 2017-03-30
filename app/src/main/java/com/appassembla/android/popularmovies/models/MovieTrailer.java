@@ -13,12 +13,13 @@ import com.squareup.moshi.Moshi;
 @SuppressWarnings("DefaultFileTemplate")
 @AutoValue
 public abstract class MovieTrailer {
+    public abstract String id();
     public abstract String key();
     public abstract String name();
     public abstract String site();
 
-    public static MovieTrailer create(@NonNull String key, @NonNull String name, @NonNull String site) {
-        return new AutoValue_MovieTrailer(key, name, site);
+    public static MovieTrailer create(@NonNull String id, @NonNull String key, @NonNull String name, @NonNull String site) {
+        return new AutoValue_MovieTrailer(id, key, name, site);
     }
 
     public static JsonAdapter<MovieTrailer> jsonAdapter(Moshi moshi) {

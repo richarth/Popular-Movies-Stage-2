@@ -83,15 +83,11 @@ class MovieDetailsPresenter {
 
         if (!moviesReviews.isEmpty()) {
             movieDetailsView.displayReviews(moviesReviews);
-        } else {
-            movieDetailsView.hideReviews();
         }
     }
 
     private void reviewFetchFailure(Throwable throwable) {
         Log.d(TAG, throwable.getMessage());
-
-        movieDetailsView.hideReviews();
     }
 
     public void displayTrailers() {
@@ -109,14 +105,15 @@ class MovieDetailsPresenter {
 
         if (!moviesTrailers.isEmpty()) {
             movieDetailsView.displayTrailers(moviesTrailers);
-        } else {
-            movieDetailsView.hideTrailers();
         }
     }
 
     private void trailerFetchFailure(Throwable throwable) {
         Log.d(TAG, throwable.getMessage());
+    }
 
-        movieDetailsView.hideTrailers();
+    public void trailerClicked(String trailerId, int adapterPosition) {
+        //movieListView.displayMovieDetail(trailerId, adapterPosition);
+        throw new UnsupportedOperationException();
     }
 }

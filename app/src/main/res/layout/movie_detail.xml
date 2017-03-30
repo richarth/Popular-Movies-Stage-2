@@ -64,6 +64,42 @@
             android:textIsSelectable="true"
             tools:text="This is a movie about making an Android app..." />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/trailersHeading"
+            android:text="@string/trailers"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:layout_marginTop="@dimen/view_spacing"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/trailersList"
+            tools:listitem="@layout/trailers_list_content"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/reviewsHeading"
+            android:text="@string/reviews"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:layout_marginTop="@dimen/view_spacing"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/reviewsList"
+            tools:listitem="@layout/reviews_list_content"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
     </LinearLayout>
 
 </ScrollView>
