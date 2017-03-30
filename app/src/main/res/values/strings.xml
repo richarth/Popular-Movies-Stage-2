@@ -10,4 +10,5 @@
     <string name="image_from_movie">Image from movie</string>
     <string name="trailers">Trailers:</string>
     <string name="reviews">Reviews:</string>
+    <string name="play_trailer">Play trailer</string>
 </resources>

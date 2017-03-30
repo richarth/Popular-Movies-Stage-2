@@ -11,4 +11,5 @@
     <dimen name="select_movie_message_width">250dp</dimen>
     <dimen name="no_margin">0dp</dimen>
     <dimen name="list_item_padding">8dp</dimen>
+    <dimen name="icon_padding">12dp</dimen>
 </resources>

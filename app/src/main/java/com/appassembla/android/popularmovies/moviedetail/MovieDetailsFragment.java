@@ -1,9 +1,9 @@
 package com.appassembla.android.popularmovies.moviedetail;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -261,8 +261,6 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsView {
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             public final View mView;
-            @BindView(R.id.trailerPlayButton)
-            ImageView trailerPlayButton;
             @BindView(R.id.trailerName)
             TextView trailerName;
 
