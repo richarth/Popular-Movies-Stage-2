@@ -98,7 +98,7 @@ public class MovieDetailsPresenterTest {
 
         movieDetailsPresenter.displayReviews();
 
-        verify(movieDetailsView).hideReviews();
+        verify(movieDetailsView, never()).displayReviews(null);
     }
 
     @Test
@@ -116,6 +116,6 @@ public class MovieDetailsPresenterTest {
 
         movieDetailsPresenter.displayTrailers();
 
-        verify(movieDetailsView).hideTrailers();
+        verify(movieDetailsView, never()).displayTrailers(null);
     }
 }
