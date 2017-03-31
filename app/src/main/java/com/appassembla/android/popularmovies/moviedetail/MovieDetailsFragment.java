@@ -77,6 +77,8 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsView {
 
     private Unbinder unbinder;
 
+    private int movieId;
+
     public MovieDetailsFragment() {
     }
 
@@ -85,7 +87,7 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsView {
         super.onCreate(savedInstanceState);
 
         if (getArguments().containsKey(ARG_ITEM_ID)) {
-            setupPresenter(getArguments().getInt(ARG_ITEM_ID));
+            movieId = getArguments().getInt(ARG_ITEM_ID);
         }
     }
 
@@ -108,6 +110,13 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsView {
     @Override public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        setupPresenter(movieId);
     }
 
     @Override
