@@ -1,5 +1,7 @@
 package com.appassembla.android.popularmovies.moviedetail;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -112,8 +114,7 @@ class MovieDetailsPresenter {
         Log.d(TAG, throwable.getMessage());
     }
 
-    public void trailerClicked(String trailerId, int adapterPosition) {
-        //movieListView.displayMovieDetail(trailerId, adapterPosition);
-        throw new UnsupportedOperationException();
+    public void trailerClicked(Uri trailerUri) {
+        movieDetailsView.displayTrailer(trailerUri);
     }
 }

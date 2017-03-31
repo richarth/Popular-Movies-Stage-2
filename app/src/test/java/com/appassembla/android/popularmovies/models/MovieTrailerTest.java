@@ -1,5 +1,7 @@
 package com.appassembla.android.popularmovies.models;
 
+import android.net.Uri;
+
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 
@@ -9,6 +11,7 @@ import org.junit.runners.JUnit4;
 
 import java.util.List;
 
+import static com.appassembla.android.popularmovies.models.MovieTrailer.YOUTUBE_VIDEO_BASE_URL;
 import static org.junit.Assert.*;
 
 /**
@@ -55,5 +58,14 @@ public class MovieTrailerTest {
         assertEquals(movieTrailers.get(0), sampleMovieTrailer1);
         assertEquals(movieTrailers.get(1), sampleMovieTrailer2);
         assertEquals(movieTrailers.get(2), sampleMovieTrailer3);
+    }
+
+    @Test
+    public void verifyTrailersViewUri() throws Exception {
+        MovieTrailer sampleMovieTrailer = MovieTrailer.create("58cfc8499251415a61037481", "XaE_9pfybL4", "Official Trailer #2 [UK]", "YouTube");
+
+        Uri movieTrailerUri = sampleMovieTrailer.generateTrailerUrl();
+
+        assertEquals(YOUTUBE_VIDEO_BASE_URL + "XaE_9pfybL4", movieTrailerUri.toString());
     }
 }

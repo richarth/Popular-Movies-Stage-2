@@ -1,5 +1,7 @@
 package com.appassembla.android.popularmovies.moviedetail;
 
+import android.net.Uri;
+
 import com.appassembla.android.popularmovies.data.MoviesRepository;
 import com.appassembla.android.popularmovies.data.StaticMoviesRepository;
 import com.appassembla.android.popularmovies.models.Movie;
@@ -117,5 +119,16 @@ public class MovieDetailsPresenterTest {
         movieDetailsPresenter.displayTrailers();
 
         verify(movieDetailsView, never()).displayTrailers(null);
+    }
+
+
+
+    @Test
+    public void shouldDisplaySelectedTrailer() {
+        Uri videoUri = Uri.parse("https://www.youtube.com/watch?v=RH3OxVFvTeg");
+
+        movieDetailsPresenter.trailerClicked(videoUri);
+
+        verify(movieDetailsView).displayTrailer(videoUri);
     }
 }

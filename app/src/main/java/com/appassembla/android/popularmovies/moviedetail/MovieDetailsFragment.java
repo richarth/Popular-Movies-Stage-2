@@ -1,6 +1,8 @@
 package com.appassembla.android.popularmovies.moviedetail;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -200,6 +202,16 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsView {
     }
 
     @Override
+    public void displayTrailer(Uri trailerUri) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(trailerUri);
+
+        if (intent.resolveActivity(getContext().getPackageManager()) != null) {
+            startActivity(intent);
+        }
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
 
@@ -251,7 +263,7 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsView {
 
             int clickedPosition = holder.getAdapterPosition();
 
-            holder.mView.setOnClickListener(v -> movieDetailsPresenter.trailerClicked(mTrailers.get(clickedPosition).id(), clickedPosition));
+            holder.mView.setOnClickListener(v -> movieDetailsPresenter.trailerClicked(mTrailers.get(clickedPosition).generateTrailerUrl()));
         }
 
         @Override
