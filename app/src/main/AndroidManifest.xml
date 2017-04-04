@@ -33,6 +33,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.appassembla.android.popularmovies.movielist.MovieListActivity" />
         </activity>
+
+
+
+        <!-- Our ContentProvider -->
+        <provider
+            android:name=".data.MoviesProvider"
+            android:authorities="@string/content_authority"
+            android:exported="false"/>
     </application>
 
 </manifest>
