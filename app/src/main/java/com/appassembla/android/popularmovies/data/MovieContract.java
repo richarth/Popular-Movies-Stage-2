@@ -18,6 +18,10 @@ public class MovieContract {
     /* Inner class that defines the table contents of the movies table */
     public static final class MovieEntry implements BaseColumns {
 
+        public static final int INDEX_ID = 0;
+        public static final int INDEX_MOVIE_ID = 1;
+        public static final int INDEX_MOVIE_NAME = 2;
+
         /* The base CONTENT_URI used to query the movies table from the content provider */
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
                 .appendPath(PATH_MOVIES)
