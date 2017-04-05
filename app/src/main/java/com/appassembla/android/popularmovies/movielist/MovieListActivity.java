@@ -27,6 +27,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 
+import com.appassembla.android.popularmovies.data.DBMoviesRepository;
+import com.appassembla.android.popularmovies.data.MoviesRepository;
 import com.appassembla.android.popularmovies.data.WebMoviesRepository;
 import com.appassembla.android.popularmovies.models.Movie;
 import com.appassembla.android.popularmovies.moviedetail.MovieDetailsActivity;
@@ -274,6 +276,17 @@ public class MovieListActivity extends AppCompatActivity implements MovieListVie
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+        //cancel any existing subscriptions before we recreate the presenter to stop memory leaks
+        movieListPresenter.cancelSubscriptions();
+
+        // if the user selected favourites then we fetch the movies from the DB rather than the web
+        if (position + 1 == MoviesRepository.FAVOURITES_SORT_TYPE) {
+            movieListPresenter = new MovieListPresenter(this, new DBMoviesRepository(this));
+        } else {
+            movieListPresenter = new MovieListPresenter(this, new WebMoviesRepository());
+        }
+
         movieListPresenter.displayMovies(position + 1);
     }
 
