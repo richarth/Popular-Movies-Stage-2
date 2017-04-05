@@ -15,6 +15,7 @@ import io.reactivex.Single;
 public interface MoviesRepository {
     int POPULAR_SORT_TYPE = 1;
     int TOP_RATED_SORT_TYPE = 2;
+    int FAVOURITES_SORT_TYPE = 3;
 
     Single<MoviesListing> getMovies(int sortType);
 
