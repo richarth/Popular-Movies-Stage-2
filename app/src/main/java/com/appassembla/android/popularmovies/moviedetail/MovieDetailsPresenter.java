@@ -35,6 +35,12 @@ class MovieDetailsPresenter {
     private Disposable movieSubscription;
     private Disposable trailersSubscription;
     private Disposable addMovieSubscription;
+    private Disposable removeMovieSubscription;
+    private Disposable getMovieSubscription;
+
+    private Context context;
+
+    private DBMoviesRepository moviesDBRepository;
 
     private Movie selectedMovie;
 
@@ -50,7 +56,7 @@ class MovieDetailsPresenter {
         if (selectedMovie != null) {
             movieSubscription = selectedMovie.observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
-                    .subscribe(this::movieFetched, this::movieFetchFailure);
+                    .subscribe(this::movieFetched, this::subscriptionFailure);
         }
     }
 
@@ -60,10 +66,6 @@ class MovieDetailsPresenter {
         movieDetailsView.hideSelectMovieMessage();
 
         movieDetailsView.displayMovieDetails(selectedMovie);
-    }
-
-    private void movieFetchFailure(Throwable throwable) {
-        Log.d(TAG, throwable.getMessage());
     }
 
     public void cancelSubscriptions() {
@@ -78,6 +80,14 @@ class MovieDetailsPresenter {
         if (addMovieSubscription != null) {
             addMovieSubscription.dispose();
         }
+
+        if (removeMovieSubscription != null) {
+            removeMovieSubscription.dispose();
+        }
+
+        if (getMovieSubscription != null) {
+            getMovieSubscription.dispose();
+        }
     }
 
     public void displayReviews() {
@@ -86,7 +96,7 @@ class MovieDetailsPresenter {
         if (selectedMoviesReviews != null) {
             trailersSubscription = selectedMoviesReviews.observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
-                    .subscribe(this::reviewsFetched, this::reviewFetchFailure);
+                    .subscribe(this::reviewsFetched, this::subscriptionFailure);
         }
     }
 
@@ -98,17 +108,13 @@ class MovieDetailsPresenter {
         }
     }
 
-    private void reviewFetchFailure(Throwable throwable) {
-        Log.d(TAG, throwable.getMessage());
-    }
-
     public void displayTrailers() {
         Single<MovieTrailersListing> selectedMoviesTrailers = moviesRepository.getMoviesTrailers(selectedMovieId);
 
         if (selectedMoviesTrailers != null) {
             trailersSubscription = selectedMoviesTrailers.observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
-                    .subscribe(this::trailersFetched, this::trailerFetchFailure);
+                    .subscribe(this::trailersFetched, this::subscriptionFailure);
         }
     }
 
@@ -120,41 +126,33 @@ class MovieDetailsPresenter {
         }
     }
 
-    private void trailerFetchFailure(Throwable throwable) {
-        Log.d(TAG, throwable.getMessage());
-    }
-
     public void trailerClicked(Uri trailerUri) {
         movieDetailsView.displayTrailer(trailerUri);
     }
 
     public void addMovieToFavourites(Context context) {
-        DBMoviesRepository moviesRepository = new DBMoviesRepository(context);
-        Single<Uri> movieAddObservable = moviesRepository.addMovieToDB(selectedMovie);
+        moviesDBRepository = new DBMoviesRepository(context);
+        Single<Movie> movieObservable = moviesDBRepository.getMovieById(selectedMovieId);
 
-        if (movieAddObservable != null) {
-            addMovieSubscription = movieAddObservable.observeOn(AndroidSchedulers.mainThread())
+        if (movieObservable != null) {
+            getMovieSubscription = movieObservable.observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
-                    .subscribe(this::movieAdded, this::movieAddFailure);
+                    .subscribe(this::toggleFavouriteState, this::subscriptionFailure);
+        } else {
+            toggleFavouriteState(null);
         }
     }
 
-    private void movieAdded(Uri uri) {
-        movieDetailsView.displayMovieAsFavourite();
-    }
-
-    private void movieAddFailure(Throwable throwable) {
-        Log.d(TAG, throwable.getMessage());
-    }
-
     public void isMovieFavourite(Context context) {
-        DBMoviesRepository moviesRepository = new DBMoviesRepository(context);
-        Single<Movie> getMovieObservable = moviesRepository.getMovieById(selectedMovieId);
+        this.context = context;
+
+        moviesDBRepository = new DBMoviesRepository(context);
+        Single<Movie> getMovieObservable = moviesDBRepository.getMovieById(selectedMovieId);
 
         if (getMovieObservable != null) {
             addMovieSubscription = getMovieObservable.observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
-                    .subscribe(this::movieFetchedFromDB, this::movieDBFetchFailure);
+                    .subscribe(this::movieFetchedFromDB, this::subscriptionFailure);
         }
     }
 
@@ -162,9 +160,55 @@ class MovieDetailsPresenter {
         if (movie != null) {
             movieDetailsView.displayMovieAsFavourite();
         }
+
+        context = null;
+
+        moviesDBRepository = null;
     }
 
-    private void movieDBFetchFailure(Throwable throwable) {
+    private void toggleFavouriteState(Movie favourite) {
+        // if the movie isn't in the DB it hasn't been favourited so add it
+        if (favourite == null) {
+            Single<Uri> movieAddObservable = moviesDBRepository.addMovieToDB(selectedMovie);
+
+            if (movieAddObservable != null) {
+                addMovieSubscription = movieAddObservable.observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribe(this::movieAdded, this::subscriptionFailure);
+            }
+        } else {
+            // the user has pressed the favourite button after it's favourited so unfavourite it
+            Single<Integer> movieRemoveObservable = moviesDBRepository.removeMovieFromDB(favourite);
+
+            if (movieRemoveObservable != null) {
+                removeMovieSubscription = movieRemoveObservable.observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribe(this::movieRemoved, this::subscriptionFailure);
+            }
+        }
+    }
+
+    private void movieAdded(Uri uri) {
+        movieDetailsView.displayMovieAsFavourite();
+
+        context = null;
+
+        moviesDBRepository = null;
+    }
+
+    private void movieRemoved(int numRemovals) {
+        movieDetailsView.removeMovieAsFavourite();
+
+        context = null;
+
+        moviesDBRepository = null;
+    }
+
+    private void subscriptionFailure(Throwable throwable) {
         Log.d(TAG, throwable.getMessage());
+
+        context = null;
+
+        moviesDBRepository = null;
     }
 }

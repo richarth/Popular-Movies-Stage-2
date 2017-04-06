@@ -181,7 +181,11 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsView, 
 
         // on tablet the hero image won't be present
         if (heroImage != null) {
-            Picasso.with(getActivity()).load(selectedMovie.getHeroImgFullUrl(detailsViewWidth)).resize(detailsViewWidth, 0).into(heroImage);
+            Picasso.with(getActivity()).load(selectedMovie.getHeroImgFullUrl(detailsViewWidth))
+                    .placeholder(R.drawable.no_movie_poster)
+                    .error(R.drawable.no_movie_poster)
+                    .fit()
+                    .into(heroImage);
 
             heroImage.setContentDescription(selectedMovie.name());
         }
@@ -232,6 +236,11 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsView, 
     @Override
     public void displayMovieAsFavourite() {
         favouriteFab.setImageDrawable(ContextCompat.getDrawable(getContext(), android.R.drawable.star_on));
+    }
+
+    @Override
+    public void removeMovieAsFavourite() {
+        favouriteFab.setImageDrawable(ContextCompat.getDrawable(getContext(), android.R.drawable.star_off));
     }
 
     @Override

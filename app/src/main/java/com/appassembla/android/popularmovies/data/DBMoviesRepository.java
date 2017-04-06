@@ -16,6 +16,8 @@ import java.util.List;
 
 import io.reactivex.Single;
 
+import static com.appassembla.android.popularmovies.data.MovieContract.MovieEntry.CONTENT_URI;
+
 /**
  * Created by richard.thompson on 05/04/2017.
  */
@@ -44,7 +46,7 @@ public class DBMoviesRepository implements MoviesRepository {
         }
 
         Cursor mCursor = context.getContentResolver().query(
-                MovieContract.MovieEntry.CONTENT_URI,
+                CONTENT_URI,
                 MOVIE_DATA_PROJECTION,
                 null,
                 null,
@@ -121,10 +123,19 @@ public class DBMoviesRepository implements MoviesRepository {
         mNewValues.put(MovieContract.MovieEntry.COLUMN_NAME, movie.name());
 
         Uri movieUri = context.getContentResolver().insert(
-                MovieContract.MovieEntry.CONTENT_URI,
+                CONTENT_URI,
                 mNewValues
         );
 
         return Single.just(movieUri);
+    }
+
+    public Single<Integer> removeMovieFromDB(Movie movie) {
+        String mSelectionClause = MovieContract.MovieEntry.COLUMN_MOVIE_ID + " = ?";
+        String[] mSelectionArgs = {String.valueOf(movie.id())};
+
+        int numRowsDeleted = context.getContentResolver().delete(CONTENT_URI, mSelectionClause, mSelectionArgs);
+
+        return Single.just(numRowsDeleted);
     }
 }

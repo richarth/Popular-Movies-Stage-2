@@ -19,4 +19,6 @@ interface MovieDetailsView {
     void displayReviews(List<MovieReview> moviesReviewsList);
     void displayTrailer(Uri trailerUri);
     void displayMovieAsFavourite();
+
+    void removeMovieAsFavourite();
 }
