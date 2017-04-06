@@ -9,6 +9,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
+import static com.appassembla.android.popularmovies.data.MovieContract.PATH_MOVIES;
+
 /**
  * Created by richard.thompson on 04/04/2017.
  */
@@ -27,9 +29,9 @@ public class MoviesProvider extends ContentProvider {
         final String authority = MovieContract.CONTENT_AUTHORITY;
 
         /* This URI is content://com.appassembla.android.popularmovies/movies/ */
-        matcher.addURI(authority, MovieContract.PATH_MOVIES, CODE_MOVIES);
+        matcher.addURI(authority, PATH_MOVIES, CODE_MOVIES);
 
-        matcher.addURI(authority, MovieContract.PATH_MOVIES + "/#", CODE_MOVIES_WITH_ID);
+        matcher.addURI(authority, PATH_MOVIES + "/#", CODE_MOVIES_WITH_ID);
 
         return matcher;
     }
@@ -136,28 +138,15 @@ public class MoviesProvider extends ContentProvider {
         switch (sUriMatcher.match(uri)) {
 
             case CODE_MOVIES:
-                db.beginTransaction();
-                int rowsInserted = 0;
-                try {
-                    for (ContentValues value : values) {
-                        long _id = db.insert(MovieContract.MovieEntry.TABLE_NAME, null, value);
-                        if (_id != -1) {
-                            rowsInserted++;
-                        }
-                    }
-                    db.setTransactionSuccessful();
-                } finally {
-                    db.endTransaction();
-                }
 
-                if (rowsInserted > 0) {
-                    getContext().getContentResolver().notifyChange(uri, null);
-                }
+                long id = db.insert(MovieContract.MovieEntry.TABLE_NAME, null, values);
 
-                return rowsInserted;
+                getContext().getContentResolver().notifyChange(uri, null);
+
+                return Uri.parse(PATH_MOVIES + "/" + id);
 
             default:
-                return super.bulkInsert(uri, values);
+                throw new IllegalArgumentException("Unknown URI: " + uri);
         }
     }
 
