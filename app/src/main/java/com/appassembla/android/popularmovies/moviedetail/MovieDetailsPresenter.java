@@ -1,10 +1,12 @@
 package com.appassembla.android.popularmovies.moviedetail;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.appassembla.android.popularmovies.data.DBMoviesRepository;
 import com.appassembla.android.popularmovies.data.MoviesRepository;
 import com.appassembla.android.popularmovies.models.Movie;
 import com.appassembla.android.popularmovies.models.MovieReview;
@@ -33,6 +35,9 @@ class MovieDetailsPresenter {
 
     private Disposable movieSubscription;
     private Disposable trailersSubscription;
+    private Disposable addMovieSubscription;
+
+    private Movie selectedMovie;
 
     public MovieDetailsPresenter(@NonNull MovieDetailsView movieDetailsView, @NonNull MoviesRepository moviesRepository, int selectedMovieId) {
         this.movieDetailsView = movieDetailsView;
@@ -51,6 +56,8 @@ class MovieDetailsPresenter {
     }
 
     private void movieFetched(Movie selectedMovie) {
+        this.selectedMovie = selectedMovie;
+
         movieDetailsView.hideSelectMovieMessage();
 
         movieDetailsView.displayMovieDetails(selectedMovie);
@@ -67,6 +74,10 @@ class MovieDetailsPresenter {
 
         if (trailersSubscription != null) {
             trailersSubscription.dispose();
+        }
+
+        if (addMovieSubscription != null) {
+            addMovieSubscription.dispose();
         }
     }
 
@@ -116,5 +127,24 @@ class MovieDetailsPresenter {
 
     public void trailerClicked(Uri trailerUri) {
         movieDetailsView.displayTrailer(trailerUri);
+    }
+
+    public void addMovieToFavourites(Context context) {
+        DBMoviesRepository moviesRepository = new DBMoviesRepository(context);
+        Single<Uri> movieAddObservable = moviesRepository.addMovieToDB(selectedMovie);
+
+        if (movieAddObservable != null) {
+            addMovieSubscription = movieAddObservable.observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(this::movieAdded, this::movieAddFailure);
+        }
+    }
+
+    private void movieAdded(Uri uri) {
+        movieDetailsView.displayMovieAsFavourite();
+    }
+
+    private void movieAddFailure(Throwable throwable) {
+        Log.d(TAG, throwable.getMessage());
     }
 }

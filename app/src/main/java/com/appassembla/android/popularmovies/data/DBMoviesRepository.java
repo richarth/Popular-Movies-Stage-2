@@ -1,7 +1,9 @@
 package com.appassembla.android.popularmovies.data;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 
 import com.appassembla.android.popularmovies.models.Movie;
 import com.appassembla.android.popularmovies.models.MovieReviewsListing;
@@ -108,5 +110,19 @@ public class DBMoviesRepository implements MoviesRepository {
     @Override
     public Single<MovieTrailersListing> getMoviesTrailers(int movieId) {
         throw new UnsupportedOperationException("getMoviesTrailers should not be used");
+    }
+
+    public Single<Uri> addMovieToDB(Movie movie) {
+        ContentValues mNewValues = new ContentValues();
+
+        mNewValues.put(MovieContract.MovieEntry.COLUMN_MOVIE_ID, movie.id());
+        mNewValues.put(MovieContract.MovieEntry.COLUMN_NAME, movie.name());
+
+        Uri movieUri = context.getContentResolver().insert(
+                MovieContract.MovieEntry.CONTENT_URI,
+                mNewValues
+        );
+
+        return Single.just(movieUri);
     }
 }

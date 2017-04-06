@@ -69,7 +69,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
         android:clickable="true"
-        app:srcCompat="@android:drawable/btn_star"
+        app:srcCompat="@android:drawable/star_off"
         app:layout_anchor="@id/backdrop"
         app:layout_anchorGravity="bottom|right|end" />
 

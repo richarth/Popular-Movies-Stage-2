@@ -6,7 +6,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,6 +32,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+import static android.R.drawable.star_off;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
@@ -39,7 +42,7 @@ import static android.view.View.VISIBLE;
  * in two-pane mode (on tablets) or a {@link MovieDetailsActivity}
  * on handsets.
  */
-public class MovieDetailsFragment extends Fragment implements MovieDetailsView {
+public class MovieDetailsFragment extends Fragment implements MovieDetailsView, View.OnClickListener {
     /**
      * The fragment argument representing the item ID that this fragment
      * represents.
@@ -72,6 +75,7 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsView {
     @SuppressWarnings("WeakerAccess")
     @BindView(R.id.reviewsList)
     protected RecyclerView reviewsRecyclerView;
+    protected FloatingActionButton favouriteFab;
     private ImageView heroImage;
     private CollapsingToolbarLayout appBarLayout;
 
@@ -103,6 +107,10 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsView {
         appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
 
         heroImage = (ImageView) activity.findViewById(R.id.backdrop);
+
+        favouriteFab = (FloatingActionButton) activity.findViewById(R.id.fab);
+
+        favouriteFab.setOnClickListener(this);
 
         return rootView;
     }
@@ -221,6 +229,11 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsView {
     }
 
     @Override
+    public void displayMovieAsFavourite() {
+        favouriteFab.setImageDrawable(ContextCompat.getDrawable(getContext(), android.R.drawable.star_on));
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
 
@@ -247,6 +260,13 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsView {
         recyclerView.setLayoutManager(listLayoutManager);
 
         recyclerView.setHasFixedSize(true);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.fab) {
+            movieDetailsPresenter.addMovieToFavourites(getContext());
+        }
     }
 
     public class TrailerItemRecyclerViewAdapter
