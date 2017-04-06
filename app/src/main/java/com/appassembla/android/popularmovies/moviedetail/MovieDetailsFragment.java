@@ -32,7 +32,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-import static android.R.drawable.star_off;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
@@ -137,6 +136,8 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsView, 
             movieDetailsPresenter.displayTrailers();
 
             movieDetailsPresenter.displayReviews();
+
+            movieDetailsPresenter.isMovieFavourite(getContext());
         }
     }
 

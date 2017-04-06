@@ -7,7 +7,6 @@ import android.net.Uri;
 
 import com.appassembla.android.popularmovies.models.Movie;
 import com.appassembla.android.popularmovies.models.MovieReviewsListing;
-import com.appassembla.android.popularmovies.models.MovieTrailer;
 import com.appassembla.android.popularmovies.models.MovieTrailersListing;
 import com.appassembla.android.popularmovies.models.MoviesListing;
 
@@ -29,6 +28,9 @@ public class DBMoviesRepository implements MoviesRepository {
             MovieContract.MovieEntry.COLUMN_MOVIE_ID,
             MovieContract.MovieEntry.COLUMN_NAME,
     };
+
+    public static final int INDEX_MOVIE_ID = 0;
+    public static final int INDEX_MOVIE_NAME = 1;
 
     public DBMoviesRepository(Context context)
     {
@@ -65,7 +67,7 @@ public class DBMoviesRepository implements MoviesRepository {
         //mCursor.moveToFirst();
 
         while (mCursor.moveToNext()) {
-            Movie movie = Movie.create(mCursor.getInt(MovieContract.MovieEntry.INDEX_MOVIE_ID), mCursor.getString(MovieContract.MovieEntry.INDEX_MOVIE_NAME), "", "", 0, "", "");
+            Movie movie = Movie.create(mCursor.getInt(INDEX_MOVIE_ID), mCursor.getString(INDEX_MOVIE_NAME), "", "", 0, "", "");
 
             moviesList.add(movie);
         }
@@ -97,7 +99,7 @@ public class DBMoviesRepository implements MoviesRepository {
 
         mCursor.moveToFirst();
 
-        Movie movie = Movie.create(mCursor.getInt(MovieContract.MovieEntry.INDEX_MOVIE_ID), mCursor.getString(MovieContract.MovieEntry.INDEX_MOVIE_NAME), "", "", 0, "", "");
+        Movie movie = Movie.create(mCursor.getInt(INDEX_MOVIE_ID), mCursor.getString(INDEX_MOVIE_NAME), "", "", 0, "", "");
 
         return Single.just(movie);
     }

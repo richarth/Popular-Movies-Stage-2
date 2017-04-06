@@ -1,7 +1,6 @@
 package com.appassembla.android.popularmovies.moviedetail;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -145,6 +144,27 @@ class MovieDetailsPresenter {
     }
 
     private void movieAddFailure(Throwable throwable) {
+        Log.d(TAG, throwable.getMessage());
+    }
+
+    public void isMovieFavourite(Context context) {
+        DBMoviesRepository moviesRepository = new DBMoviesRepository(context);
+        Single<Movie> getMovieObservable = moviesRepository.getMovieById(selectedMovieId);
+
+        if (getMovieObservable != null) {
+            addMovieSubscription = getMovieObservable.observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(this::movieFetchedFromDB, this::movieDBFetchFailure);
+        }
+    }
+
+    private void movieFetchedFromDB(Movie movie) {
+        if (movie != null) {
+            movieDetailsView.displayMovieAsFavourite();
+        }
+    }
+
+    private void movieDBFetchFailure(Throwable throwable) {
         Log.d(TAG, throwable.getMessage());
     }
 }
