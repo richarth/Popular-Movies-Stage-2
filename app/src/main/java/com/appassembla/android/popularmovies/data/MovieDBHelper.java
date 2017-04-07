@@ -46,7 +46,9 @@ public class MovieDBHelper extends SQLiteOpenHelper {
 
                         MovieEntry.COLUMN_MOVIE_ID + " INTEGER NOT NULL,"                  +
 
-                        MovieEntry.COLUMN_NAME       + " EXT NOT NULL, "                 +
+                        MovieEntry.COLUMN_NAME       + " TEXT NOT NULL, "                 +
+
+                        MovieEntry.COLUMN_POSTER_URL       + " TEXT NOT NULL, "                 +
 
                 /*
                  * To ensure this table can only contain one movie entry per movie ID, we declare

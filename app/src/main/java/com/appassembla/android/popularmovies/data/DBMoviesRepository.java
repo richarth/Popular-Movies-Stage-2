@@ -26,13 +26,15 @@ public class DBMoviesRepository implements MoviesRepository {
 
     private Context context;
 
-    public static final String[] MOVIE_DATA_PROJECTION = {
+    private static final String[] MOVIE_DATA_PROJECTION = {
             MovieContract.MovieEntry.COLUMN_MOVIE_ID,
             MovieContract.MovieEntry.COLUMN_NAME,
+            MovieContract.MovieEntry.COLUMN_POSTER_URL,
     };
 
-    public static final int INDEX_MOVIE_ID = 0;
-    public static final int INDEX_MOVIE_NAME = 1;
+    private static final int INDEX_MOVIE_ID = 0;
+    private static final int INDEX_MOVIE_NAME = 1;
+    private static final int INDEX_MOVIE_POSTER = 2;
 
     public DBMoviesRepository(Context context)
     {
@@ -69,7 +71,7 @@ public class DBMoviesRepository implements MoviesRepository {
         //mCursor.moveToFirst();
 
         while (mCursor.moveToNext()) {
-            Movie movie = Movie.create(mCursor.getInt(INDEX_MOVIE_ID), mCursor.getString(INDEX_MOVIE_NAME), "", "", 0, "", "");
+            Movie movie = Movie.create(mCursor.getInt(INDEX_MOVIE_ID), mCursor.getString(INDEX_MOVIE_NAME), mCursor.getString(INDEX_MOVIE_POSTER), "", 0, "", "");
 
             moviesList.add(movie);
         }
@@ -101,7 +103,7 @@ public class DBMoviesRepository implements MoviesRepository {
 
         mCursor.moveToFirst();
 
-        Movie movie = Movie.create(mCursor.getInt(INDEX_MOVIE_ID), mCursor.getString(INDEX_MOVIE_NAME), "", "", 0, "", "");
+        Movie movie = Movie.create(mCursor.getInt(INDEX_MOVIE_ID), mCursor.getString(INDEX_MOVIE_NAME), mCursor.getString(INDEX_MOVIE_POSTER), "", 0, "", "");
 
         return Single.just(movie);
     }
@@ -121,6 +123,7 @@ public class DBMoviesRepository implements MoviesRepository {
 
         mNewValues.put(MovieContract.MovieEntry.COLUMN_MOVIE_ID, movie.id());
         mNewValues.put(MovieContract.MovieEntry.COLUMN_NAME, movie.name());
+        mNewValues.put(MovieContract.MovieEntry.COLUMN_POSTER_URL, movie.posterUrl());
 
         Uri movieUri = context.getContentResolver().insert(
                 CONTENT_URI,

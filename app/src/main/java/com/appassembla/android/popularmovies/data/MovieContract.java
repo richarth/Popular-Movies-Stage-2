@@ -31,6 +31,8 @@ public class MovieContract {
 
         public static final String COLUMN_NAME = "name";
 
+        public static final String COLUMN_POSTER_URL = "poster_url";
+
         /**
          * Builds a URI that adds the movie ID to the end of the movie content URI path.
          * This is used to query details about a single movie entry by ID. This is what we
