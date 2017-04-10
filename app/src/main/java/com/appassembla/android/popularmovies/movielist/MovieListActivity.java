@@ -42,6 +42,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static android.view.View.*;
+import static com.appassembla.android.popularmovies.data.MoviesRepository.FAVOURITES_SORT_TYPE;
 
 /**
  * An activity representing a list of Movies. This activity
@@ -122,6 +123,12 @@ public class MovieListActivity extends AppCompatActivity implements MovieListVie
         super.onResume();
 
         restoreRecyclerViewState();
+
+        Spinner sortSpinner = (Spinner) findViewById(R.id.sort_order_spinner);
+
+        if (sortSpinner != null && sortSpinner.getSelectedItemPosition() == FAVOURITES_SORT_TYPE - 1) {
+            movieListPresenter.displayMovies(FAVOURITES_SORT_TYPE);
+        }
     }
 
     @Override
@@ -281,7 +288,7 @@ public class MovieListActivity extends AppCompatActivity implements MovieListVie
         movieListPresenter.cancelSubscriptions();
 
         // if the user selected favourites then we fetch the movies from the DB rather than the web
-        if (position + 1 == MoviesRepository.FAVOURITES_SORT_TYPE) {
+        if (position + 1 == FAVOURITES_SORT_TYPE) {
             movieListPresenter = new MovieListPresenter(this, new DBMoviesRepository(this));
         } else {
             movieListPresenter = new MovieListPresenter(this, new WebMoviesRepository());
